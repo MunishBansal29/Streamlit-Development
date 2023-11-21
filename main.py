@@ -1,7 +1,8 @@
 from sys import maxsize
 import streamlit as sl
 import time
-from streamlit_extras.switch_page_button import switch_page
+import pandas as pd
+# from streamlit_extras.switch_page_button import switch_page
 
 sl.title("Hi ! This is my first Streamlit app !!")
 sl.write("Happy Learning ! [Streamlit](https://streamlit.io/)")
