@@ -99,15 +99,30 @@ if isDF == 1:
 
     #Tabs - like columns we can create multiple tabs and content within those tabs
     sl.write("Based upon Region & State filters applied")
-    tab1, tab2 = sl.tabs(["Time Series Analysis", "Plotly native theme"])
+    tab1, tab2 = sl.tabs(["Time Series Analysis", "Scatter plot by category"])
 
-    #create some time-series i.e. line charts in these two tabs
-    #Let's first convert the OrderDate and add that as month-year
-    df_selected["Month-Year"] = df_selected["Order Date"].dt.to_period("M")
-    # sl.write(df_selected)
-    ts_df = pd.DataFrame(df_selected.groupby(df_selected["Month-Year"].dt.strftime("%Y :  %b"))["Sales"].sum()).reset_index()
-    line_pic = px.line(ts_df, x="Month-Year", y="Sales", width=1000, template = "gridon")
-    sl.plotly_chart(line_pic, use_container_width=True)
+    with tab1:
+        #create some time-series i.e. line charts in these two tabs
+        #Let's first convert the OrderDate and add that as month-year
+        df_selected["Month-Year"] = df_selected["Order Date"].dt.to_period("M")
+        # sl.write(df_selected)
+        ts_df = pd.DataFrame(df_selected.groupby(df_selected["Month-Year"].dt.strftime("%Y :  %b"))["Sales"].sum()).reset_index()
+        line_pic = px.line(ts_df, x="Month-Year", y="Sales", width=1000, template = "gridon")
+        sl.plotly_chart(line_pic, use_container_width=True)
     
+    with tab2:
+        # sl.subheader("Scatter plot by category")
+        scatter_df = df_filtered.groupby(by=["Category", "Sub-Category"], as_index=False)["Sales"].sum()
+        sca_fig = px.scatter(
+            scatter_df,
+            x="Category",
+            y="Sales",
+            size="Sales",
+            color="Sub-Category",
+            hover_name="Category",
+           
+            size_max=60,
+        )
+        sl.plotly_chart(sca_fig, theme="streamlit", use_container_width=True)
 
         
