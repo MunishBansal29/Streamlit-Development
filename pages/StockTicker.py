@@ -39,7 +39,8 @@ else:
 
 
 st.write("Current time - ", time.time()) #This also changes every second, and proves that st_autorefresh() refreshes the entire page, not a single component/part of it.
-
+#We may use a separate page which acts as a componenent and gets refreshed as a page using auto_refresh() but then called
+## here as iframe component e.g. st.components.v1.iframe(src, width=None, height=None, scrolling=False) where src is the link to that subpage
 
 stock_list = ['RELIANCE.NS', 'TATAMOTORS.NS', 'TCS.NS', 'INFY.NS', 'WIPRO.NS']
 col1 = st.empty()
